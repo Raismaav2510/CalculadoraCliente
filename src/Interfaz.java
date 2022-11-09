@@ -18,12 +18,19 @@ public class Interfaz extends JFrame implements ActionListener {
     public JButton raiz = new JButton("√");
     Operaciones implementacion;
 
+    Interfaz() {
+        inicializarComponentes();
+    }
+
     Interfaz(Operaciones operaciones) {
         this.implementacion = operaciones;
-        setTitle("CALCULADORA");
+        inicializarComponentes();
+    }
+
+    public void inicializarComponentes() {
+        setTitle("Calculadora");
         setSize(295, 380);
         setLocationRelativeTo(null);
-        //getContentPane().setBackground(new java.awt.Color(185,245,248));
         setLayout(null);
         componentes();
         enviar.addActionListener(this);
@@ -80,17 +87,19 @@ public class Interfaz extends JFrame implements ActionListener {
             try {
                 String numero = monitor.getText();
                 if(numero.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Se debe escribir un número para enviar al servidor");
+                    JOptionPane.showMessageDialog(null, "Escribe un número para enviar al servidor");
+                    JOptionPane.showMessageDialog(null, "Escribe un número para enviar al servidor");
+
                     return;
                 }
                 this.implementacion.agregar(Double.parseDouble(monitor.getText()));
-                JOptionPane.showMessageDialog(null, numero + " enviado con exito al servidor, esperando resultados");
+                JOptionPane.showMessageDialog(null, numero + " enviado con exito al servidor");
                 monitor.setText("");
                 monitor.setEditable(false);
                 enviar.setEnabled(false);
                 limpiar.setEnabled(true);
             } catch (RemoteException ex) {
-                JOptionPane.showMessageDialog(null, "Error en el envío de datos");
+                JOptionPane.showMessageDialog(null, "Error al enviar los datos");
                 Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -102,7 +111,7 @@ public class Interfaz extends JFrame implements ActionListener {
                     monitor.setText(implementacion.obtenerNum1() + " + " + this.implementacion.obtenerNum2() + " = " + resultado);
                     return;
                 }
-                JOptionPane.showMessageDialog(null, "El otro usuario no a enviado su respectivo número");
+                JOptionPane.showMessageDialog(null, "El otro usuario no a enviado ningún número");
             } catch (RemoteException ex) {
                 Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -115,7 +124,7 @@ public class Interfaz extends JFrame implements ActionListener {
                     monitor.setText(this.implementacion.obtenerNum1() + " - " + this.implementacion.obtenerNum2() + " = "  + resultado);
                     return;
                 }
-                JOptionPane.showMessageDialog(null, "El otro usuario no a enviado su respectivo número");
+                JOptionPane.showMessageDialog(null, "El otro usuario no a enviado ningún número");
             } catch (RemoteException ex) {
                 Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -128,7 +137,7 @@ public class Interfaz extends JFrame implements ActionListener {
                     monitor.setText(this.implementacion.obtenerNum1() + " * " + this.implementacion.obtenerNum2() + " = "  + resultado);
                     return;
                 }
-                JOptionPane.showMessageDialog(null, "El otro usuario no a enviado su respectivo número");
+                JOptionPane.showMessageDialog(null, "El otro usuario no a enviado ningún número");
             } catch (RemoteException ex) {
                 Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -141,7 +150,7 @@ public class Interfaz extends JFrame implements ActionListener {
                     monitor.setText(this.implementacion.obtenerNum1() + " / " + this.implementacion.obtenerNum2() + " = "  + resultado);
                     return;
                 }
-                JOptionPane.showMessageDialog(null, "El otro usuario no a enviado su respectivo número");
+                JOptionPane.showMessageDialog(null, "El otro usuario no a enviado ningún número");
             } catch (RemoteException ex) {
                 Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -154,7 +163,7 @@ public class Interfaz extends JFrame implements ActionListener {
                     monitor.setText(this.implementacion.obtenerNum1() + " % " + this.implementacion.obtenerNum2() + " = "  + res);
                     return;
                 }
-                JOptionPane.showMessageDialog(null, "El otro usuario no a enviado su respectivo número");
+                JOptionPane.showMessageDialog(null, "El otro usuario no a enviado ningún número");
             } catch (RemoteException ex) {
                 Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -167,7 +176,7 @@ public class Interfaz extends JFrame implements ActionListener {
                     monitor.setText(this.implementacion.obtenerNum1() + " ^ " + this.implementacion.obtenerNum2() + " = "  + resultado);
                     return;
                 }
-                JOptionPane.showMessageDialog(null, "El otro usuario no a enviado su respectivo número");
+                JOptionPane.showMessageDialog(null, "El otro usuario no a enviado ningún número");
             } catch (RemoteException ex) {
                 Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -180,7 +189,7 @@ public class Interfaz extends JFrame implements ActionListener {
                     monitor.setText(this.implementacion.obtenerNum1() + " √ " + this.implementacion.obtenerNum2() + " = "  + resultado);
                     return;
                 }
-                JOptionPane.showMessageDialog(null, "El otro usuario no a enviado su respectivo número");
+                JOptionPane.showMessageDialog(null, "El otro usuario no a enviado ningún número");
             } catch (RemoteException ex) {
                 Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
             }
