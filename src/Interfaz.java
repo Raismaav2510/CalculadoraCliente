@@ -6,10 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Interfaz extends JFrame implements ActionListener {
-    public JLabel texto = new JLabel("Seleccione una operación:");
-    public JLabel texto1 = new JLabel("Ingresa el número deseado:");
     public JTextField monitor = new JTextField();
-    public JTextArea resultado = new JTextArea();
     public JButton enviar = new JButton("Enviar");
     public JButton limpiar = new JButton("Limpiar");
     public JButton suma = new JButton("+");
@@ -74,35 +71,25 @@ public class Interfaz extends JFrame implements ActionListener {
 
         limpiar.setBounds(10,260,180,85);
         add(limpiar);
-
-        texto1.setBounds(520,20,180,25);
-        add(texto1);
-
-        texto.setBounds(520,100,180,25);
-        add(texto);
-
-        resultado.setEditable(false);
-        JScrollPane scroll = new JScrollPane(resultado);
-        scroll.setBounds(20,300,150,45);
-        add(scroll);
-
-
+        limpiar.setEnabled(false);
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == enviar) {
             try {
-                String texto = monitor.getText();
-                if(texto.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Debe escribir el numero que desea enviar al servidor");
+                String numero = monitor.getText();
+                if(numero.equals("")) {
+                    JOptionPane.showMessageDialog(null, "Se debe escribir un número para enviar al servidor");
                     return;
                 }
                 this.implementacion.agregar(Double.parseDouble(monitor.getText()));
-                JOptionPane.showMessageDialog(null, "El número " + texto + " a sido enviado al servidor");
+                JOptionPane.showMessageDialog(null, "El número " + numero + " a sido enviado al servidor");
                 JOptionPane.showMessageDialog(null, "Esperando resultados");
                 monitor.setText("");
+                monitor.setEditable(false);
+                enviar.setEnabled(false);
+                limpiar.setEnabled(true);
             } catch (RemoteException ex) {
                 Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -111,9 +98,8 @@ public class Interfaz extends JFrame implements ActionListener {
         else if(e.getSource() == suma) {
             try {
                 if(this.implementacion.verificar()) {
-                    double result = this.implementacion.suma(this.implementacion.obtenerNum1(), this.implementacion.obtenerNum2());
-                    String res = Double.toString(result);
-                    resultado.setText("La suma de " + implementacion.obtenerNum1() + " + " + this.implementacion.obtenerNum2() + " es " + res);
+                    double resultado = this.implementacion.suma(this.implementacion.obtenerNum1(), this.implementacion.obtenerNum2());
+                    monitor.setText(implementacion.obtenerNum1() + " + " + this.implementacion.obtenerNum2() + " = " + resultado);
                     return;
                 }
                 JOptionPane.showMessageDialog(null, "El otro usuario no a enviado su respectivo número");
@@ -125,9 +111,8 @@ public class Interfaz extends JFrame implements ActionListener {
         else if(e.getSource() == resta) {
             try {
                 if(this.implementacion.verificar()) {
-                    double result = this.implementacion.resta(this.implementacion.obtenerNum1(), this.implementacion.obtenerNum2());
-                    String res = Double.toString(result);
-                    resultado.setText("La resta de: " + this.implementacion.obtenerNum1() + " - " + this.implementacion.obtenerNum2() + " es "  + res);
+                    double resultado = this.implementacion.resta(this.implementacion.obtenerNum1(), this.implementacion.obtenerNum2());
+                    monitor.setText(this.implementacion.obtenerNum1() + " - " + this.implementacion.obtenerNum2() + " = "  + resultado);
                     return;
                 }
                 JOptionPane.showMessageDialog(null, "El otro usuario no a enviado su respectivo número");
@@ -139,9 +124,8 @@ public class Interfaz extends JFrame implements ActionListener {
         else if(e.getSource() == multiplicación) {
             try {
                 if(this.implementacion.verificar()){
-                    Double result = this.implementacion.multiplicacion(this.implementacion.obtenerNum1(), this.implementacion.obtenerNum2());
-                    String res = Double.toString(result);
-                    resultado.setText("La multiplicación de: " + this.implementacion.obtenerNum1() + " * " + this.implementacion.obtenerNum2() + " es "  + res);
+                    Double resultado = this.implementacion.multiplicacion(this.implementacion.obtenerNum1(), this.implementacion.obtenerNum2());
+                    monitor.setText(this.implementacion.obtenerNum1() + " * " + this.implementacion.obtenerNum2() + " = "  + resultado);
                     return;
                 }
                 JOptionPane.showMessageDialog(null, "El otro usuario no a enviado su respectivo número");
@@ -153,9 +137,8 @@ public class Interfaz extends JFrame implements ActionListener {
         else if(e.getSource() == division) {
             try {
                 if(this.implementacion.verificar()) {
-                    double result = this.implementacion.division(this.implementacion.obtenerNum1(), this.implementacion.obtenerNum2());
-                    String res = Double.toString(result);
-                    resultado.setText("La división de: " + this.implementacion.obtenerNum1() + " / " + this.implementacion.obtenerNum2() + " es "  + res);
+                    double resultado = this.implementacion.division(this.implementacion.obtenerNum1(), this.implementacion.obtenerNum2());
+                    monitor.setText(this.implementacion.obtenerNum1() + " / " + this.implementacion.obtenerNum2() + " = "  + resultado);
                     return;
                 }
                 JOptionPane.showMessageDialog(null, "El otro usuario no a enviado su respectivo número");
@@ -168,7 +151,7 @@ public class Interfaz extends JFrame implements ActionListener {
                 if(this.implementacion.verificar()){
                     double result = this.implementacion.modulo(this.implementacion.obtenerNum1(), this.implementacion.obtenerNum2());
                     String res = Double.toString(result);
-                    resultado.setText("El modulo de: " + this.implementacion.obtenerNum1() + " % " + this.implementacion.obtenerNum2() + " es "  + res);
+                    monitor.setText(this.implementacion.obtenerNum1() + " % " + this.implementacion.obtenerNum2() + " = "  + res);
                     return;
                 }
                 JOptionPane.showMessageDialog(null, "El otro usuario no a enviado su respectivo número");
@@ -180,9 +163,8 @@ public class Interfaz extends JFrame implements ActionListener {
         else if(e.getSource() == potencia) {
             try {
                 if(this.implementacion.verificar()) {
-                    double result = this.implementacion.potencia(this.implementacion.obtenerNum1(), this.implementacion.obtenerNum2());
-                    String res = Double.toString(result);
-                    resultado.setText("La potencia de: " + this.implementacion.obtenerNum1() + " ^ " + this.implementacion.obtenerNum2() + " es "  + res);
+                    double resultado = this.implementacion.potencia(this.implementacion.obtenerNum1(), this.implementacion.obtenerNum2());
+                    monitor.setText(this.implementacion.obtenerNum1() + " ^ " + this.implementacion.obtenerNum2() + " = "  + resultado);
                     return;
                 }
                 JOptionPane.showMessageDialog(null, "El otro usuario no a enviado su respectivo número");
@@ -194,9 +176,8 @@ public class Interfaz extends JFrame implements ActionListener {
         else if(e.getSource() == raiz) {
             try {
                 if(this.implementacion.verificar()) {
-                    double result = this.implementacion.raiz(this.implementacion.obtenerNum1(), this.implementacion.obtenerNum2());
-                    String res = Double.toString(result);
-                    resultado.setText("La raiz de: " + this.implementacion.obtenerNum1() + " √ " + this.implementacion.obtenerNum2() + " es "  + res);
+                    double resultado = this.implementacion.raiz(this.implementacion.obtenerNum1(), this.implementacion.obtenerNum2());
+                    monitor.setText(this.implementacion.obtenerNum1() + " √ " + this.implementacion.obtenerNum2() + " = "  + resultado);
                     return;
                 }
                 JOptionPane.showMessageDialog(null, "El otro usuario no a enviado su respectivo número");
@@ -207,7 +188,9 @@ public class Interfaz extends JFrame implements ActionListener {
 
         else if(e.getSource() == limpiar) {
             monitor.setText("");
-            resultado.setText("");
+            monitor.setEditable(true);
+            enviar.setEnabled(true);
+            limpiar.setEnabled(false);
         }
     }
 }
