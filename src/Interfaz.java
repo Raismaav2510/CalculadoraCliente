@@ -84,13 +84,13 @@ public class Interfaz extends JFrame implements ActionListener {
                     return;
                 }
                 this.implementacion.agregar(Double.parseDouble(monitor.getText()));
-                JOptionPane.showMessageDialog(null, "El número " + numero + " a sido enviado al servidor");
-                JOptionPane.showMessageDialog(null, "Esperando resultados");
+                JOptionPane.showMessageDialog(null, numero + " enviado con exito al servidor, esperando resultados");
                 monitor.setText("");
                 monitor.setEditable(false);
                 enviar.setEnabled(false);
                 limpiar.setEnabled(true);
             } catch (RemoteException ex) {
+                JOptionPane.showMessageDialog(null, "Error en el envío de datos");
                 Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
